@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.2}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Baguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+In this exercise, we have to find the set of coupled linear equations, analogous
+to (1.122), statisfied by the coefficients $w_i$ which minimize the regularized sum-of-squares error function given by (1.4):
+
+Let's start by stating the regularized sum-of-squares error function (1.4):
+
+\begin{align*}
+  E(\textbf{w}) = \frac{1}{2} \sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\}^2 + \frac{\lambda}{2} \left\lVert \textbf{w} \right\rVert^2
+\end{align*}
+
+where $\lambda$ is the regularization parameter and $\left\lVert \textbf{w} \right\rVert^2$ is the squared norm of the coefficient vector $\textbf{w}$, which can be expressed as:
+
+\begin{align*}
+  \left\lVert \textbf{w} \right\rVert^2 = \textbf{w}^T \textbf{w} = \sum_{j=0}^M w_j^2
+\end{align*}
+
+To minimize the error function $E(\textbf{w})$, we need to find coefficients $\textbf{w}$ such that the derivative of $E(\textbf{w})$ with respect to $\textbf{w}$ is 0 (because $E(\textbf{w})$ is a scalar function of the vector $\textbf{w}$)
+
+Here, $M$ is the degree of the polynomial and $N$ is the number of data points. We have $M+1$ coefficients to estimate from $N$ observations. Since $E(\textbf{w})$ is a convex quadratic function in $\textbf{w}$, the minimum is unique.
+
+Also, $E(\textbf{w})$ is continuously differentiable with respect to $\textbf{w}$, so we can compute its gradient, which is the vector of partial derivatives:
+
+\begin{align*}
+  \dfrac{\partial E(\textbf{w})}{\partial \textbf{w}} &= \left( \dfrac{\partial E(\textbf{w})}{\partial w_0}, \dfrac{\partial E(\textbf{w})}{\partial w_1}, \ldots, \dfrac{\partial E(\textbf{w})}{\partial w_M} \right) \\
+  &= \left( \frac{1}{2} \sum_{n=1}^N 2 \left\{ y(x_n, \textbf{w}) - t_n \right\} \dfrac{\partial y(x_n, \textbf{w})}{\partial w_i} + \frac{\lambda}{2} 2 w_i \right)_{i=0}^{M} \\
+  &= \left( \sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\} x_n^i + \lambda w_i \right)_{i=0}^{M}
+\end{align*}
+
+To find the minimum, we set the gradient to zero:
+
+\begin{align*}
+  \begin{cases}
+  \sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\} x_n^0 + \lambda w_0 = 0, \\
+  \sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\} x_n^1 + \lambda w_1 = 0, \\
+  \vdots \\
+  \sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\} x_n^M + \lambda w_M = 0.
+  \end{cases}
+\end{align*}
+
+
+By substituting $y(x_n, \textbf{w})$ with $\sum_{j=0}^M w_j x_n^j$, we can rewrite the system of equations as:
+
+\begin{align*}
+  \begin{cases}
+  \sum_{n=1}^N \left\{ \sum_{j=0}^M w_j x_n^j - t_n \right\} x_n^0 + \lambda w_0 = 0, \\
+  \sum_{n=1}^N \left\{ \sum_{j=0}^M w_j x_n^j - t_n \right\} x_n^1 + \lambda w_1 = 0, \\
+  \vdots \\
+  \sum_{n=1}^N \left\{ \sum_{j=0}^M w_j x_n^j - t_n \right\} x_n^M + \lambda w_M = 0.
+  \end{cases}
+\end{align*}
+
+By rearranging the terms, we can express the system of equations in matrix form as:
+
+\begin{align*}
+  \sum_{j=0}^M A_{ij} w_j + \lambda w_i = T_i \quad \text{for } i = 0, 1, \ldots, M.
+\end{align*}
+
+where
+
+\begin{align*}
+  A_{ij} &= \sum_{n=1}^N \left( x_n \right)^{i+j} \\
+  T_i &= \sum_{n=1}^N \left( x_n \right)^i t_n
+\end{align*}
+
+\end{tcolorbox}
+
+\end{document}
