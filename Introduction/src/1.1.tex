@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ExerciseID}{1.1}
+
+\title{\BookName\ Solutions}
+\author{Ahonakpon Guy Baguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+In this exercise, we are asked to show that the coefficients  
+$\textbf{w} = \{w_i\}$ that minimize the error function are given by the solution to the following set of linear equations:
+
+\begin{align*}
+  \sum_{j=0}^M A_{ij} w_j = T_i
+\end{align*}
+
+where
+
+\begin{align*}
+  A_{ij} &= \sum_{n=1}^N \left( x_n \right)^{i+j} \\
+  T_i &= \sum_{n=1}^N \left( x_n \right)^i t_n
+\end{align*}   
+
+Let start by stating the (1.2) error function:
+
+\begin{align*}
+  E(\textbf{w}) = \frac{1}{2} \sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\}^2
+\end{align*}
+
+in which the function $y(x_n,  \textbf{w})$ is given by the polynomial (1.1):
+
+\begin{align*}
+  y(x_n, \textbf{w}) = w_0 + w_1 x + w_2 x^2 + \ldots + w_M x^M = \sum_{j=0}^M w_j x^j
+\end{align*}
+
+To minimize the error function $E(\textbf{w})$, we need to find coefficients $\textbf{w}$ such that the derivative of $E(\textbf{w})$ with respect to $\textbf{w}$ is 0 (because $E(\textbf{w})$ is a scalar function of the vector $\textbf{w}$):
+
+Here, $M$ is the degree of the polynomial and $N$ is the number of data points. We have $M+1$ coefficients to estimate from $N$ observations. Since $E(\textbf{w})$ is a convex quadratic function in $\textbf{w}$, the minimum is unique.
+
+Also, $E(\textbf{w})$ is continuously differentiable with respect to $\textbf{w}$, so we can compute its gradient, which is the vector of partial derivatives:
+
+\begin{align*}
+  \dfrac{\partial E(\textbf{w})}{\partial \textbf{w}} &= \left( \dfrac{\partial E(\textbf{w})}{\partial w_0}, \dfrac{\partial E(\textbf{w})}{\partial w_1}, \ldots, \dfrac{\partial E(\textbf{w})}{\partial w_M} \right) \\
+  &= \left( \frac{1}{2} \sum_{n=1}^N 2 \left\{ y(x_n, \textbf{w}) - t_n \right\} \dfrac{\partial y(x_n, \textbf{w})}{\partial w_i} \right)_{i=0}^{M} \\
+  &= \left( \sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\} x_n^i \right)_{i=0}^{M}.
+\end{align*}
+
+By setting the gradient to 0, we get the following system of equations:
+
+\begin{align*}
+\begin{cases}
+\sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\} x_n^0 = 0, \\
+\sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\} x_n^1 = 0, \\
+\vdots \\
+\sum_{n=1}^N \left\{ y(x_n, \textbf{w}) - t_n \right\} x_n^M = 0.
+\end{cases}
+\end{align*}
+
+By substituting $y(x_n, \textbf{w})$ with $\sum_{j=0}^M w_j x_n^j$, we can rewrite the system of equations as:
+
+\begin{align*}
+\begin{cases}
+\sum_{n=1}^N \left\{ \sum_{j=0}^M w_j x_n^j - t_n \right\} x_n^0 = 0, \\
+\sum_{n=1}^N \left\{ \sum_{j=0}^M w_j x_n^j - t_n \right\} x_n^1 = 0, \\
+\vdots \\
+\sum_{n=1}^N \left\{ \sum_{j=0}^M w_j x_n^j - t_n \right\} x_n^M = 0.
+\end{cases}
+\end{align*}
+
+By rearranging the terms, we can express the system of equations in matrix form as:
+
+\begin{align*}
+\begin{cases}
+\sum_{j=0}^M w_j \sum_{n=1}^N x_n^{j+0} = \sum_{n=1}^N t_n x_n^0, \\
+\sum_{j=0}^M w_j \sum_{n=1}^N x_n^{j+1} = \sum_{n=1}^N t_n x_n^1, \\
+\vdots \\
+\sum_{j=0}^M w_j \sum_{n=1}^N x_n^{j+M} = \sum_{n=1}^N t_n x_n^M.
+\end{cases}
+\end{align*}
+
+By defining $A_{ij} = \sum_{n=1}^N x_n^{i+j}$ and $T_i = \sum_{n=1}^N t_n x_n^i$, we can rewrite the system of equations as:
+
+\begin{align*}
+\begin{cases}
+\sum_{j=0}^M A_{0j} w_j = T_0, \\
+\sum_{j=0}^M A_{1j} w_j = T_1, \\
+\vdots \\
+\sum_{j=0}^M A_{Mj} w_j = T_M.
+\end{cases}
+\end{align*}
+
+This can be compactly written in matrix form as:
+\begin{align*}
+\sum_{j=0}^M A_{ij} w_j = T_i \quad \text{for } i = 0, 1, \ldots, M.
+\end{align*}
+
+
+In conclusion, we have shown that the coefficients $\textbf{w}$ that minimize the error function $E(\textbf{w})$ are given by the solution to the set of linear equations defined by $\sum_{j=0}^M A_{ij} w_j = T_i$, where $A_{ij}$ and $T_i$ are defined as above.
+
+\end{tcolorbox}
+
+\end{document}
