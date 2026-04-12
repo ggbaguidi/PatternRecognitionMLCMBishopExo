@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.3}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Baguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+In this exercise we have three coloured boxes red (r), blue (b) and green (g).
+Box r contains 3 apples, 4 oranges and 3 limes. 
+Box b contains 1 apple, 1 orange and 0 limes. 
+Box g contains 3 apples, 3 oranges and 4 limes.
+
+If a box is chosen at random with probabilities $p(r) = 0.2$, $p(b) = 0.2$ and $p(g) = 0.6$, 
+and then a piece of fruit is removed at random from the box,
+
+\paragraph{what is the probability that it is an apple?}
+
+To find the probability that a randomly removed piece of fruit is an apple, we can use the law of total probability. We need to consider the probability of choosing each box and the probability of picking an apple from that box.
+The probability of picking an apple from box r is $\frac{3}{10}$, from box b is $\frac{1}{2}$, and from box g is $\frac{3}{10}$.
+Thus, the total probability of picking an apple is:
+
+\begin{align*}
+  p(\text{apple}) &= p(r) \cdot p(\text{apple} | r) + p(b) \cdot p(\text{apple} | b) + p(g) \cdot p(\text{apple} | g) \\
+  &= 0.2 \cdot \frac{3}{10} + 0.2 \cdot \frac{1}{2} + 0.6 \cdot \frac{3}{10} \\
+  &= 0.06 + 0.1 + 0.18 \\
+  &= \frac{17}{50}
+\end{align*}
+
+\paragraph{if the piece of fruit is an orange, what is the probability that it came from the green box?}
+To find the probability that the orange came from the green box given that we picked an orange, we can use Bayes' theorem. We need to calculate the probability of picking an orange from each box and then apply Bayes' theorem to find the desired probability.
+The probability of picking an orange from box r is $\frac{4}{10}$, from box b is $\frac{1}{2}$, and from box g is $\frac{3}{10}$.
+Thus, the total probability of picking an orange is:
+
+\begin{align*}
+  p(\text{orange}) &= p(r) \cdot p(\text{orange} | r) + p(b) \cdot p(\text{orange} | b) + p(g) \cdot p(\text{orange} | g) \\
+  &= 0.2 \cdot \frac{4}{10} + 0.2 \cdot \frac{1}{2} + 0.6 \cdot \frac{3}{10} \\
+  &= 0.08 + 0.1 + 0.18 \\
+  &= \frac{18}{50}
+\end{align*}
+
+Now, we can apply Bayes' theorem to find the probability that the orange came from the green box:
+\begin{align*}
+  p(g | \text{orange}) &= \frac{p(g) \cdot p(\text{orange} | g)}{p(\text{orange})} \\
+  &= \frac{0.6 \cdot \frac{3}{10}}{\frac{18}{50}} \\
+  &= \frac{0.18}{0.36} \\
+  &= \frac{1}{2}
+\end{align*}
+\end{tcolorbox}
+
+\end{document}
