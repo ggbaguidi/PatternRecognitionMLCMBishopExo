@@ -103,6 +103,7 @@ new-exercise new:
 	fi
 	@cp template.tex "$(CHAPTER)/src/$(EXERCISE).tex"
 	@sed -i "s/exercise-id/$(EXERCISE)/g" "$(CHAPTER)/src/$(EXERCISE).tex"
+	@sed -i "s|Chapter name|$(CHAPTER)|g" "$(CHAPTER)/src/$(EXERCISE).tex"
 	@echo "Created $(CHAPTER)/src/$(EXERCISE).tex from template.tex"
 
 clean:
