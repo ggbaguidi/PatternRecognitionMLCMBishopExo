@@ -16,7 +16,7 @@
 *.bcf
 *.nav
 *.snm
-*.vrb
+*.xsim
 
 # Misc
 .DS_Store
