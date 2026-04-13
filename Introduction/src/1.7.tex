@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.7}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Baguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+In this exercise, we prove the normalization condition (1.48)
+for the univariate Gaussian distribution:
+
+\begin{align*}
+  \int_{-\infty}^{\infty} N(x|\mu, \sigma^2) dx = 1
+\end{align*}
+
+where $N(x|\mu, \sigma^2)$ is the probability density function of a univariate Gaussian distribution with mean $\mu$ and variance $\sigma^2$:
+
+\begin{align*}
+  N(x|\mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right)
+\end{align*}
+
+To do this consider, the integral:
+
+\begin{align*}
+  I &= \int_{-\infty}^{\infty}  \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right) dx
+\end{align*}
+
+which we can evaluate by first writing its square in the form:
+
+\begin{align*}
+  I^2 &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} x^2 -\frac{1}{2\sigma^2} y^2 \right) dx dy
+\end{align*}
+
+Now make the transformation from cartesian coordinates $(x, y)$ to polar coordinates $(r, \theta)$ and then 
+substitute $u = r^2$ to obtain:
+
+Let's show that, by performing the integrals over $\theta$ and $u$, and then taking the square root of both sides,
+we obtain 
+
+\begin{align*}
+  I &= {2\pi\sigma^2}^{1/2}
+\end{align*}
+
+Let's start by performing the change of variables from cartesian coordinates $(x, y)$ to polar coordinates $(r, \theta)$:
+
+\begin{align*}
+  I^2 &= \int_{0}^{2\pi} \int_{0}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} r^2 \right) r dr d\theta
+\end{align*}
+
+Next, we perform the substitution $u = r^2$, which implies that $du = 2r dr$ or equivalently $r dr = \frac{1}{2} du$:
+
+\begin{align*}
+  I^2 &= \int_{0}^{2\pi} \int_{0}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} u \right) \frac{1}{2} du d\theta \\
+  &= \frac{1}{2} \int_{0}^{2\pi} d\theta \int_{0}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} u \right) du \\
+  &= \pi \int_{0}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} u \right) du \quad \text{since } \int_{0}^{2\pi} d\theta = 2\pi \text{ and } \frac{1}{2} \cdot 2\pi = \pi
+\end{align*}
+
+Now we can evaluate the remaining integral over $u$:
+
+\begin{align*}
+  \int_{0}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} u \right) du &= \left[ -2\sigma^2 \exp\left( -\frac{1}{2\sigma^2} u \right) \right]_{0}^{\infty} \\
+  &= 2\sigma^2
+\end{align*}
+
+Substituting this result back into the expression for $I^2$, we have:
+
+\begin{align*}
+  I^2 &= \pi \cdot 2\sigma^2 \\
+  &= 2\pi\sigma^2
+\end{align*}
+
+Finally, by taking the square root of both sides, we obtain:
+
+\begin{align*}
+  I &= \sqrt{2\pi\sigma^2} \\
+  &= {2\pi\sigma^2}^{1/2}
+\end{align*}
+
+Finally by using this result, we show that the normalization condition holds:
+
+\begin{align*}
+  \int_{-\infty}^{\infty} N(x|\mu, \sigma^2) dx &= \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right) dx \\
+  &= \frac{1}{\sqrt{2\pi\sigma^2}} \int_{-\infty}^{\infty}  \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right) dx \\
+  &= \frac{1}{\sqrt{2\pi\sigma^2}} I \\
+  &= \frac{1}{\sqrt{2\pi\sigma^2}} {2\pi\sigma^2}^{1/2} \\
+  &= 1
+\end{align*}
+
+\par\medskip
+\paragraph{Personal note:} During the process of solving this exercise, I learned how to
+use the change of variables in multiple integrals (because of the integral operator properties) 
+and how to evaluate the Gaussian integral by using polar coordinates and substitution.
+
+\end{tcolorbox}
+
+\end{document}
