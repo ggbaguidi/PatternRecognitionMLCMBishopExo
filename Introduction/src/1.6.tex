@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.6}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Baguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+In this exercise, we have to show that if two variables $x$ and $y$ are independent,
+then their covariance is zero.
+\par\medskip
+Let $x$ and $y$ be two random variables defined on a probability space with joint probability 
+density function $p(x, y)$. The covariance of $x$ and $y$ is defined as:
+\begin{align*}
+  \text{Cov}[x, y] &= \mathbb{E}[(x - \mathbb{E}[x])(y - \mathbb{E}[y])] \\
+  &= \mathbb{E}_{xy}[xy] - \mathbb{E}[x]\mathbb{E}[y]
+\end{align*}
+
+If $x$ and $y$ are independent, then their joint probability density function can be 
+written as the product of their marginal probability density functions:
+\begin{align*}
+  p(x, y) = p(x) p(y)
+\end{align*}
+
+Now we compute the expectation of the product $xy$. The form of the expectation depends
+on the type of variables:
+\begin{itemize}
+  \item for discrete variables, expectation is written as a sum;
+  \item for continuous variables, expectation is written as an integral.
+\end{itemize}
+In both cases, the same idea is used: because $x$ and $y$ are independent, the joint
+distribution factors as $p(x,y)=p(x)p(y)$, and then we can separate the double sum or
+double integral by using 	\textit{Fubini's theorem} (or Tonelli's theorem when the functions
+are nonnegative).
+\begin{align*}
+  \mathbb{E}_{xy}[xy] &= \int \int xy p(x, y) dx dy \\
+  &= \int \int xy p(x) p(y) dx dy \\ \quad\text{(by independence)} \\
+  &= \left( \int x p(x) dx \right) \left( \int y p(y) dy \right) \\
+  &= \mathbb{E}[x] \mathbb{E}[y]
+\end{align*}
+
+So the same proof works for discrete sums and continuous integrals; only the notation changes.
+The important point is that the joint probability factors, and then the sum or integral can
+be separated into one part depending only on $x$ and one part depending only on $y$.
+\par\medskip
+
+By substituting this result back into the expression for covariance, we have:
+
+\begin{align*}
+  \text{Cov}[x, y] &= \mathbb{E}_{xy}[xy] - \mathbb{E}[x]\mathbb{E}[y] \\
+  &= \mathbb{E}[x] \mathbb{E}[y] - \mathbb{E}[x]\mathbb{E}[y] \\
+  &= 0
+\end{align*}
+
+This shows that if two variables $x$ and $y$ are independent, then their covariance 
+is zero, which means that there is no linear relationship between them. 
+However, it is important to note that the converse is not necessarily true: 
+if the covariance of two variables is zero, it does not imply that they are independent, 
+as there could still be a nonlinear relationship between them.
+
+\paragraph{Personal note on Fubini's theorem:} The key step in this derivation is not integration by parts. 
+It is the use of Fubini's theorem, which lets us rewrite a double integral as an iterated integral when the function is integrable. 
+For discrete random variables, the same idea is written with double sums instead of double integrals. 
+Because independence gives $p(x,y)=p(x)p(y)$, the expression becomes a product of an $x$-part and a $y$-part:
+\begin{align*}
+\int \int xy \, p(x) p(y) \, dx dy = \left( \int x p(x) dx \right) \left( \int y p(y) dy \right)
+\end{align*}
+So this is really a theorem about changing the order of summation or integration, not about differentiating products.
+
+\paragraph{Resources to learn more about Fubini's theorem:}
+\begin{itemize}
+  \item Rudin, Walter. \textit{Real and Complex Analysis}. McGraw-Hill, 3rd ed. 1987. Chapter 8, Theorem 8.8.
+  \item \url{https://en.wikipedia.org/wiki/Fubini\%27s_theorem}.
+\end{itemize}
+
+\end{tcolorbox}
+
+\end{document}
