@@ -38,6 +38,7 @@ By differentiating (1.27), we have to show that the location $\hat{y}$ of the ma
 of $p_y(y)$ is not in general related to the location $\hat{x}$ of the maximum of $p_x(x)$ 
 by the simple functional relation $\hat{x} = g(\hat{y})$ as a consequence of the presence 
 of the Jacobian factor $\left| g'(y) \right|$ in (1.27).
+\par\medskip
 
 To find the location $\hat{y}$ of the maximum of $p_y(y)$, we need to compute the derivative 
 of $p_y(y)$ with respect to $y$ and set it to zero:
@@ -64,14 +65,26 @@ Setting this equation to zero and solving for $y$ will give us the location of t
 This shows that the maximum of $p_y(y)$ depends on both the shape of $p_x(x)$ and the transformation $g(y)$. 
 So, in general, the point $\hat{y}$ that maximizes $p_y(y)$ is not simply the inverse image of $\hat{x}$,
  because the Jacobian factor $\left| g'(y) \right|$ also changes the density.
+\par\medskip
 
 \paragraph{Note from the book:} This shows that the maximum of a probability density (in contrast to a simple 
 function) is dependent on the choice of variable.
+\par\medskip
 
-Let's verify that, in case of a linear transformation, the location of the maximum transforms in the same way as the variable. 
+Let's verify that, in case of a linear transformation, the location of the maximum transforms 
+in the same way as the variable. 
 For a linear transformation, we have $g(y) = ay + b$, where $a$ and $b$ are constants.
 
-In this case, the Jacobian factor is constant and equal to $|a|$. Therefore, the transformed density is given by:
+\par\medskip
+The case $a = 0$ is not a valid change of variable, because the transformation is not invertible. 
+So we only consider the case $a \neq 0$. In this case, the derivative of $g(y)$ is constant and equal 
+to $a$, so we have:
+
+\begin{align*}
+  g'(y) = a
+\end{align*}
+
+The Jacobian factor is constant and equal to $|a|$. Therefore, the transformed density is given by:
 
 \begin{align*}
   p_y(y) &= p_x(ay + b) \cdot |a|
@@ -84,23 +97,27 @@ to $y$ and set it to zero:
 \begin{align*}
   \frac{d}{dy} p_y(y) &= \frac{d}{dy} \left[ p_x(ay + b) \cdot |a| \right] \\
   &= |a| \cdot p_x'(ay + b) \cdot a \\
-  &= a^2 \cdot p_x'(ay + b)
+  &= a|a| \cdot p_x'(ay + b)
 \end{align*}
 
 
 Setting this equation to zero gives us:
 
 \begin{align*}
-  a^2 \cdot p_x'(ay + b) &= 0 \\
-  p_x'(ay + b) &= 0
+  a|a| \cdot p_x'(ay + b) &= 0 \\
+  p_x'(ay + b) &= 0 \quad \text{(since $a \neq 0$)}
 \end{align*}
 
-Where we know that $x = g(y) = ay + b$ and $p_x'(x)$ is the derivative of $p_x(x)$ with respect to $x$.
+Here, we know that $x = g(y) = ay + b$ and $p_x'(x)$ is the derivative of $p_x(x)$ with respect to $x$.
 
-This means that the location $\hat{y}$ of the maximum of $p_y(y)$ is related to the location 
-$\hat{x}$ of the maximum of $p_x(x)$ by the simple functional relation $\hat{x} = g(\hat{y})$, 
-which confirms that for a linear transformation, the location of the maximum transforms in 
-the same way as the variable.
+This means that the maximum of $p_y(y)$ occurs when $ay + b = \hat{x}$. Therefore,
+
+\begin{align*}
+  \hat{y} = \frac{\hat{x} - b}{a}.
+\end{align*}
+
+So, for a linear transformation with $a \neq 0$, the location of the maximum changes in the same way as the variable.
+\par\medskip
 
 \paragraph{Personal note:} During the process of solving this exercise, 
 I understand that the location of the maximum in maths terms means:
