@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.5}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Baguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+In this exercise, we have to use the definition (1.38)
+
+\begin{align*}
+  \text{Var}[f] = \mathbb{E} \left[ \left( f(x) - \mathbb{E}[f(x)] \right)^2 \right]
+\end{align*}
+
+to show that the $\text{Var}[f(x)]$ statifies (1.39):
+
+\begin{align*}
+  \text{Var}[f] = \mathbb{E}[f(x)^2] - \left( \mathbb{E}[f(x)] \right)^2
+\end{align*}
+
+Let $f(x)$ be a random variable defined on a probability space with probability density function $p(x)$. The expectation of $f(x)$ is given by:
+
+\begin{align*}
+  \mathbb{E}[f(x)] &= \sum_x p(x) f(x) \quad \text{(in case of discrete random variable)} \\
+  \mathbb{E}[f(x)] &= \int p(x) f(x) dx \quad \text{(in case of continuous random variable)}
+\end{align*}
+
+To compute the variance of $f(x)$, we can expand the definition of variance as follows:
+
+\begin{align*}
+  \text{Var}[f] &= \mathbb{E} \left[ \left( f(x) - \mathbb{E}[f(x)] \right)^2 \right] \\
+  &= \mathbb{E} \left[ f(x)^2 - 2 f(x) \mathbb{E}[f(x)] + \left( \mathbb{E}[f(x)] \right)^2 \right] \\
+  &= \mathbb{E}[f(x)^2] - 2 \mathbb{E}[f(x)] \mathbb{E}[f(x)] + \left( \mathbb{E}[f(x)] \right)^2 \\
+  &= \mathbb{E}[f(x)^2] - 2 \left( \mathbb{E}[f(x)] \right)^2 + \left( \mathbb{E}[f(x)] \right)^2 \\
+  &= \mathbb{E}[f(x)^2] - \left( \mathbb{E}[f(x)] \right)^2
+\end{align*}
+
+because the expectation operator is linear, we can separate the terms and compute the expectation 
+of each term individually. The final result shows that the variance of $f(x)$ can be expressed as 
+the difference between the expected value of $f(x)^2$ and the square of the expected value of 
+$f(x)$, which is exactly what we wanted to show.
+
+\par\medskip
+\paragraph{Personal note:} I learned more about the properties of the expectation operator, 
+such as linearity, and how to manipulate from this MIT OpenCourseWare ressource: 
+\url{https://ocw.mit.edu/courses/6-042j-mathematics-for-computer-science-fall-2005/6ad0342f836f80c219470870db432c18_ln14.pdf}.
+
+\end{tcolorbox}
+
+\end{document}
