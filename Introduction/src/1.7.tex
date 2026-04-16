@@ -41,7 +41,7 @@ where $N(x|\mu, \sigma^2)$ is the probability density function of a univariate G
 To do this consider, the integral:
 
 \begin{align*}
-  I &= \int_{-\infty}^{\infty}  \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right) dx
+  I &= \int_{-\infty}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} x^2 \right) dx
 \end{align*}
 
 which we can evaluate by first writing its square in the form:
@@ -100,6 +100,8 @@ Finally by using this result, we show that the normalization condition holds:
 \begin{align*}
   \int_{-\infty}^{\infty} N(x|\mu, \sigma^2) dx &= \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right) dx \\
   &= \frac{1}{\sqrt{2\pi\sigma^2}} \int_{-\infty}^{\infty}  \exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right) dx \\
+  &= \frac{1}{\sqrt{2\pi\sigma^2}} \int_{-\infty}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} z^2 \right) dz \quad \text{by performing the change of variable } x-\mu \to z \\
+  &= \frac{1}{\sqrt{2\pi\sigma^2}} \int_{-\infty}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} x^2 \right) dx \quad \text{since dz = dx} \\
   &= \frac{1}{\sqrt{2\pi\sigma^2}} I \\
   &= \frac{1}{\sqrt{2\pi\sigma^2}} {2\pi\sigma^2}^{1/2} \\
   &= 1
