@@ -1,0 +1,209 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.8}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Gbaguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+By using a change of variable, verify that the univariate Gaussian distribution 
+given by (1.46) statisfies (1.49).
+
+let restate the equations (1.46) and (1.49) for clarity:
+
+\begin{equation}
+  \mathcal{N}(x|\mu,\sigma^2) = \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\} \tag{1.46}
+\end{equation}
+
+\begin{equation}
+  \mathbb{E}[x] = \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) x dx = \mu \tag{1.49}
+\end{equation}
+
+To verify that the univariate Gaussian distribution satisfies the expectation value given by (1.49), we can perform a change of variable. Let's define a new variable \( z \) as follows:
+
+\[
+z = x - \mu \implies x = z + \mu
+\]
+
+Now, we can rewrite the expectation value in terms of \( z \):
+
+\[
+\mathbb{E}[x] = \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) x dx = \int_{-\infty}^{\infty} \mathcal{N}(z + \mu|\mu,\sigma^2) (z + \mu) dz
+\]
+
+Substituting \( x = z + \mu \) and the expression for the Gaussian distribution, we get:
+
+\[
+\mathbb{E}[x] = \int_{-\infty}^{\infty} \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} (z + \mu) dz
+\]
+
+We can now split this integral into two parts and factor out the constants:
+
+\begin{align*}
+  \mathbb{E}[x] &= \int_{-\infty}^{\infty} \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} z dz + \int_{-\infty}^{\infty} \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} \mu dz \\
+  &= \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \left[ \int_{-\infty}^{\infty} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} z dz + \mu \int_{-\infty}^{\infty} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} dz \right]
+\end{align*}
+
+By refering to exercise 1.7, we know that
+
+\[
+I = \int_{-\infty}^{\infty} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} dz = (2\pi\sigma^2)^{1/2} \quad \text{with any abitrary z term}
+\]
+
+By rewriting $\mathbb{E}[x]$ with the value of $I$, we get:
+
+\begin{align*}
+  \mathbb{E}[x] &= \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \left[ \int_{-\infty}^{\infty} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} z dz + \mu (2\pi\sigma^2)^{1/2} \right] \\
+  &= \mu + \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \int_{-\infty}^{\infty} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} z dz
+\end{align*}
+
+Let us denote the remaining integral as \( J \) and prove that it is equal to zero:
+
+\[
+J = \int_{-\infty}^{\infty} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} z dz
+\]
+
+Let show that $\int_{-\infty}^{\infty} \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} z$ is an odd function, and thus its integral over the entire real line is zero.
+
+To show that the function \( f(z) = \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} z \) is an odd function, we need to verify that \( f(-z) = -f(z) \).
+
+Let's compute \( f(-z) \):
+
+\[
+f(-z) = \exp\left\{-\frac{1}{2\sigma^2} (-z)^2\right\} (-z) = \exp\left\{-\frac{1}{2\sigma^2} z^2\right\} (-z) = -\exp\left\{-\frac{1}{2\sigma^2} z^2\right\} z = -f(z)
+\]
+
+Since \( f(-z) = -f(z) \), the function \( f(z) \) is indeed an odd function. Therefore, the integral of \( f(z) \) over the entire real line is zero:
+
+\[
+J = 0
+\]
+
+By substituting \( J = 0 \) back into the expression for \( \mathbb{E}[x] \), we get:
+
+\[
+\mathbb{E}[x] = \mu + \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \cdot 0 = \mu
+\]
+
+\textbf{Thus, we have verified that the univariate Gaussian distribution satisfies the expectation value given by (1.49), which is \( \mathbb{E}[x] = \mu \).}
+
+\vspace{1em}
+
+By differentiating both sides of the normalization condition with respect to $\sigma^2$, verify that the univariate Gaussian distribution given by (1.46) satisfies (1.50).
+
+Let's restate the normalization condition and equation (1.50) for clarity:
+
+\[
+\mathbb{E}[x^2] = \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) x^2 dx = \mu^2 + \sigma^2 \tag{1.50}
+\]
+
+To verify that the univariate Gaussian distribution satisfies the expectation value given by (1.50), we can differentiate both sides of the normalization condition with respect to \( \sigma^2 \).
+
+The normalization condition states that the integral of the Gaussian distribution over the entire real line is equal to 1:
+
+\[
+\int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) dx = 1
+\]
+
+Differentiating both sides of this equation with respect to \( \sigma^2 \), we get:
+
+\[
+\frac{d}{d\sigma^2} \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) dx = \frac{d}{d\sigma^2} 1
+\]
+
+Since the right-hand side is a constant, its derivative is zero:
+
+\[
+\int_{-\infty}^{\infty} \frac{\partial}{\partial \sigma^2} \mathcal{N}(x|\mu,\sigma^2) dx = 0
+\]
+
+Now, we need to compute the partial derivative of the Gaussian distribution with respect to \( \sigma^2 \):
+
+\begin{align*}
+\frac{\partial}{\partial \sigma^2} \mathcal{N}(x|\mu,\sigma^2) &= \frac{\partial}{\partial \sigma^2} \left( \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\} \right) \\
+&= \frac{\partial}{\partial \sigma^2} \left( \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \right) \exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\} + \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \frac{\partial}{\partial \sigma^2} \left( \exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\} \right) \\
+&= -\frac{1}{\left(\pi\right)^{1/2} \left(2\sigma^2\right)^{3/2}} \exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\} + \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \left( \frac{1}{2\sigma^4} (x-\mu)^2 \exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\} \right) \\
+&= \frac{1}{\left(2\pi\sigma^2\right)^{1/2}}exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\} \left( \frac{1}{2\sigma^4} (x-\mu)^2 - \frac{1}{2\sigma^2} \right) \\
+&= \mathcal{N}(x|\mu,\sigma^2) \left(\frac{1}{2\sigma^4} (x-\mu)^2 - \frac{1}{2\sigma^2}\right)
+\end{align*}
+
+Substituting this back into the integral, we get:
+
+\[
+\int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) \left(\frac{1}{2\sigma^4} (x-\mu)^2 - \frac{1}{2\sigma^2}\right) dx = 0
+\]
+
+We can split this integral into two parts:
+
+\begin{align*}
+\int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) \frac{1}{2\sigma^4} (x-\mu)^2 dx - \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) \frac{1}{2\sigma^2} dx = 0
+\end{align*}
+
+Now, we can factor out the constants:
+
+\begin{align*}
+\frac{1}{2\sigma^4} \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) (x-\mu)^2 dx - \frac{1}{2\sigma^2} \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) dx = 0
+\end{align*}
+
+We know that the integral of the Gaussian distribution over the entire real line is equal to 1:
+
+\[\int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) dx = 1\]
+
+Thus, we can simplify the equation to:
+
+\begin{align*}
+\frac{1}{2\sigma^4} \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) (x-\mu)^2 dx - \frac{1}{2\sigma^2} &= 0 \\
+\frac{1}{2\sigma^4} \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) (x-\mu)^2 dx &= \frac{1}{2\sigma^2} \\
+\int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) (x-\mu)^2 dx &= \sigma^2
+\end{align*}
+
+By manipulating $V = \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) (x-\mu)^2 dx$, we can express it in terms of $\mathbb{E}[x^2]$ and $\mathbb{E}[x]$:
+
+\begin{align*}
+V &= \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) (x^2 - 2\mu x + \mu^2) dx \\
+&= \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) x^2 dx - 2\mu \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) x dx + \mu^2 \int_{-\infty}^{\infty} \mathcal{N}(x|\mu,\sigma^2) dx \\
+&= \mathbb{E}[x^2] - 2\mu \mathbb{E}[x] + \mu^2 \quad \text{(since $\mathbb{E}[x] = \int_{-\infty}^{\infty} x \mathcal{N}(x|\mu,\sigma^2) dx$ and $\mathbb{E}[x^2] = \int_{-\infty}^{\infty} x^2 \mathcal{N}(x|\mu,\sigma^2) dx$)} \\
+&= \mathbb{E}[x^2] - 2\mu^2 + \mu^2  \quad \text{(since $\mathbb{E}[x] = \mu$)} \\
+&= \mathbb{E}[x^2] - \mu^2
+\end{align*}
+
+Since we have already established that \( V = \sigma^2 \), we can substitute this back into the equation to find \( \mathbb{E}[x^2] \):
+
+\begin{align*}
+\sigma^2 &= \mathbb{E}[x^2] - \mu^2 \\
+\mathbb{E}[x^2] &= \mu^2 + \sigma^2
+\end{align*}
+
+\textbf{Thus, we have verified that the univariate Gaussian distribution satisfies the expectation value given by (1.50), which is \( \mathbb{E}[x^2] = \mu^2 + \sigma^2 \).}
+
+\vspace{1em}
+
+Finally let show (1.51) by using the results of (1.49) and (1.50):
+
+\begin{align*}
+\text{var}[x] &= \mathbb{E}[x^2] - (\mathbb{E}[x])^2 \\
+&= (\mu^2 + \sigma^2) - \mu^2 \\
+&= \sigma^2
+\end{align*}
+\end{tcolorbox}
+
+\end{document}
