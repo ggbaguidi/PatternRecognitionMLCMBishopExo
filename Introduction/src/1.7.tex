@@ -60,10 +60,17 @@ we obtain
   I &= {2\pi\sigma^2}^{1/2}
 \end{align*}
 
-Let's start by performing the change of variables from cartesian coordinates $(x, y)$ to polar coordinates $(r, \theta)$:
+Let's start by manipulating the expression for $I^2$
 
 \begin{align*}
-  I^2 &= \int_{0}^{2\pi} \int_{0}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} r^2 \right) r dr d\theta
+  I^2 &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} x^2 -\frac{1}{2\sigma^2} y^2 \right) dx dy \\
+  &= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} (x^2 + y^2) \right) dx dy
+\end{align*}
+
+by performing the change of variables from cartesian coordinates $(x, y)$ to polar coordinates $(r, \theta)$:
+
+\begin{align*}
+  I^2 &= \int_{0}^{2\pi} \int_{0}^{\infty}  \exp\left( -\frac{1}{2\sigma^2} r^2 \right) r dr d\theta \quad \text{since } x^2 + y^2 = r^2 \text{ and } dx dy = r dr d\theta
 \end{align*}
 
 Next, we perform the substitution $u = r^2$, which implies that $du = 2r dr$ or equivalently $r dr = \frac{1}{2} du$:
