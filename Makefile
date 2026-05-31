@@ -23,6 +23,7 @@ help:
 	@echo "  make chapter CHAPTER=X  Build one chapter (e.g. CHAPTER=Introduction)"
 	@echo "  make new-exercise CHAPTER=X EXERCISE=Y  Create CHAPTER/src/Y.tex from template"
 	@echo "  make new CHAPTER=X EXERCISE=Y           Alias of new-exercise"
+	@echo "  make exercise CHAPTER=X EXERCISE=Y      Build a single exercise .tex file"
 	@echo "  make clean              Remove LaTeX aux files"
 	@echo "  make clean-all          Remove aux files and generated PDFs"
 
@@ -105,6 +106,28 @@ new-exercise new:
 	@sed -i "s/exercise-id/$(EXERCISE)/g" "$(CHAPTER)/src/$(EXERCISE).tex"
 	@sed -i "s|Chapter name|$(CHAPTER)|g" "$(CHAPTER)/src/$(EXERCISE).tex"
 	@echo "Created $(CHAPTER)/src/$(EXERCISE).tex from template.tex"
+
+exercise:
+	@if [ -z "$(CHAPTER)" ] || [ -z "$(EXERCISE)" ]; then \
+		echo "Usage: make exercise CHAPTER=<chapter-folder> EXERCISE=<name>"; \
+		exit 1; \
+	fi
+	@tex_file="$(CHAPTER)/src/$(EXERCISE).tex"; \
+	if [ ! -f "$$tex_file" ]; then \
+		echo "Exercise file '$$tex_file' not found."; \
+		exit 1; \
+	fi; \
+	mkdir -p "$(CHAPTER)/pdf"; \
+	echo "Building $$tex_file -> $(CHAPTER)/pdf/"; \
+	if command -v $(LATEXMK) >/dev/null 2>&1; then \
+		$(LATEXMK) $(LATEXMK_FLAGS) -outdir=$(CHAPTER)/pdf $$tex_file || exit $$?; \
+	elif command -v $(PDFLATEX) >/dev/null 2>&1; then \
+		$(PDFLATEX) $(PDFLATEX_FLAGS) -output-directory=$(CHAPTER)/pdf $$tex_file || exit $$?; \
+		$(PDFLATEX) $(PDFLATEX_FLAGS) -output-directory=$(CHAPTER)/pdf $$tex_file || exit $$?; \
+	else \
+		echo "Error: neither '$(LATEXMK)' nor '$(PDFLATEX)' is installed."; \
+		exit 127; \
+	fi
 
 clean:
 	@for ch in $(CHAPTERS); do \
