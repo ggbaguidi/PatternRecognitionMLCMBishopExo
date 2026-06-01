@@ -1,0 +1,250 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.10}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Gbaguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+Let \(X\) and \(Z\) be two random variables. In this exercise, we want to show that, when
+\(X\) and \(Z\) are statistically independent, the mean and variance of their sum satisfy
+the following properties:
+
+\begin{align*}
+  \mathbb{E}[X+Z] &= \mathbb{E}[X] + \mathbb{E}[Z] \tag{1.128} \\
+  \operatorname{var}[X+Z] &= \operatorname{var}[X] + \operatorname{var}[Z]. \tag{1.129}
+\end{align*}
+
+\subsubsection*{Proof of the expectation identity}
+
+First, notice an important point: the identity
+\[
+  \mathbb{E}[X+Z] = \mathbb{E}[X] + \mathbb{E}[Z]
+\]
+does \emph{not} require \(X\) and \(Z\) to be independent. It only requires the relevant
+expectations to exist. This property is called the linearity of expectation.
+
+\paragraph{Continuous case.}
+Assume that \(X\) and \(Z\) are continuous random variables with joint density
+\(p(x,z)\). The joint density describes the probability of the pair \((X,Z)\). It may or
+may not factorize as \(p(x)p(z)\). If \(X\) and \(Z\) are independent, then
+\(p(x,z)=p(x)p(z)\), but we will not need that here.
+
+By definition, the expectation of \(X+Z\) is
+\[
+  \mathbb{E}[X+Z]
+  =
+  \iint_{\mathbb{R}^2}
+  (x+z)p(x,z)\,dx\,dz.
+\]
+
+Using the linearity of integration, we split the integrand:
+
+\begin{align*}
+  \mathbb{E}[X+Z]
+  &=
+  \iint_{\mathbb{R}^2}
+  (x+z)p(x,z)\,dx\,dz \\
+  &=
+  \iint_{\mathbb{R}^2}
+  xp(x,z)\,dx\,dz
+  +
+  \iint_{\mathbb{R}^2}
+  zp(x,z)\,dx\,dz.
+\end{align*}
+
+Now we show that the first double integral is \(\mathbb{E}[X]\). For a joint density,
+the marginal density of \(X\) is obtained by integrating out \(z\):
+\[
+  p_X(x) = \int_{-\infty}^{\infty} p(x,z)\,dz.
+\]
+Therefore,
+
+\begin{align*}
+  \iint_{\mathbb{R}^2}
+  xp(x,z)\,dx\,dz
+  &=
+  \int_{-\infty}^{\infty}
+  x
+  \left(
+    \int_{-\infty}^{\infty} p(x,z)\,dz
+  \right)
+  dx \\
+  &=
+  \int_{-\infty}^{\infty} x p_X(x)\,dx \\
+  &=
+  \mathbb{E}[X].
+\end{align*}
+
+Similarly, the marginal density of \(Z\) is
+\[
+  p_Z(z) = \int_{-\infty}^{\infty} p(x,z)\,dx,
+\]
+and so
+
+\begin{align*}
+  \iint_{\mathbb{R}^2}
+  zp(x,z)\,dx\,dz
+  &=
+  \int_{-\infty}^{\infty}
+  z
+  \left(
+    \int_{-\infty}^{\infty} p(x,z)\,dx
+  \right)
+  dz \\
+  &=
+  \int_{-\infty}^{\infty} z p_Z(z)\,dz \\
+  &=
+  \mathbb{E}[Z].
+\end{align*}
+
+Combining the two pieces gives
+\[
+  \mathbb{E}[X+Z]
+  =
+  \mathbb{E}[X]+\mathbb{E}[Z].
+\]
+
+The key point is that we never used \(p(x,z)=p_X(x)p_Z(z)\). Hence the result holds
+whether \(X\) and \(Z\) are independent or dependent.
+
+\paragraph{Discrete case.}
+Now assume that \(X\) and \(Z\) are discrete random variables. Let
+\[
+  p(x,z) = \mathbb{P}(X=x,Z=z)
+\]
+be their joint probability mass function. Again, this joint probability may or may not
+factorize into \(\mathbb{P}(X=x)\mathbb{P}(Z=z)\).
+
+By definition,
+\[
+  \mathbb{E}[X+Z]
+  =
+  \sum_x \sum_z (x+z)\mathbb{P}(X=x,Z=z).
+\]
+
+Using the linearity of summation, we get
+
+\begin{align*}
+  \mathbb{E}[X+Z]
+  &=
+  \sum_x \sum_z x\mathbb{P}(X=x,Z=z)
+  +
+  \sum_x \sum_z z\mathbb{P}(X=x,Z=z).
+\end{align*}
+
+For the first term, \(x\) does not depend on \(z\), so
+
+\begin{align*}
+  \sum_x \sum_z x\mathbb{P}(X=x,Z=z)
+  &=
+  \sum_x x \sum_z \mathbb{P}(X=x,Z=z) \\
+  &=
+  \sum_x x \mathbb{P}(X=x) \\
+  &=
+  \mathbb{E}[X].
+\end{align*}
+
+The equality
+\[
+  \sum_z \mathbb{P}(X=x,Z=z) = \mathbb{P}(X=x)
+\]
+is simply the definition of the marginal probability of \(X\). We add up all possible
+values of \(Z\), leaving only the probability that \(X=x\).
+
+For the second term, \(z\) does not depend on \(x\), so
+
+\begin{align*}
+  \sum_x \sum_z z\mathbb{P}(X=x,Z=z)
+  &=
+  \sum_z z \sum_x \mathbb{P}(X=x,Z=z) \\
+  &=
+  \sum_z z \mathbb{P}(Z=z) \\
+  &=
+  \mathbb{E}[Z].
+\end{align*}
+
+Thus,
+\[
+  \mathbb{E}[X+Z]
+  =
+  \mathbb{E}[X]+\mathbb{E}[Z].
+\]
+
+Again, no independence assumption was used. The result follows only from the linearity
+of sums and from the definition of marginal probabilities.
+
+\subsubsection*{Proof of the variance identity}
+
+For the variance identity, independence does matter. By definition,
+\[
+  \operatorname{var}[Y] = \mathbb{E}\left[(Y-\mathbb{E}[Y])^2\right].
+\]
+Taking \(Y=X+Z\), and using the expectation identity proved above, we have
+
+\begin{align*}
+  \operatorname{var}[X+Z]
+  &=
+  \mathbb{E}\left[\left(X+Z-\mathbb{E}[X+Z]\right)^2\right] \\
+  &=
+  \mathbb{E}\left[\left(X+Z-\mathbb{E}[X]-\mathbb{E}[Z]\right)^2\right] \\
+  &=
+  \mathbb{E}\left[\left((X-\mathbb{E}[X])+(Z-\mathbb{E}[Z])\right)^2\right].
+\end{align*}
+
+Now expand the square:
+
+\begin{align*}
+  \operatorname{var}[X+Z]
+  &=
+  \mathbb{E}\left[(X-\mathbb{E}[X])^2\right]
+  +
+  \mathbb{E}\left[(Z-\mathbb{E}[Z])^2\right] \\
+  &\qquad
+  +
+  2\mathbb{E}\left[(X-\mathbb{E}[X])(Z-\mathbb{E}[Z])\right] \\
+  &=
+  \operatorname{var}[X]
+  +
+  \operatorname{var}[Z]
+  +
+  2\operatorname{cov}[X,Z].
+\end{align*}
+
+If \(X\) and \(Z\) are independent, then
+\[
+  \operatorname{cov}[X,Z]=0.
+\]
+Therefore,
+\[
+  \operatorname{var}[X+Z]
+  =
+  \operatorname{var}[X]+\operatorname{var}[Z].
+\]
+
+This completes the proof of both identities. The expectation identity holds for
+independent and dependent random variables, while the variance identity needs
+independence, or more generally zero covariance.
+\end{tcolorbox}
+
+\end{document}
