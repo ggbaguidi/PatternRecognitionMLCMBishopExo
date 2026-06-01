@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.9}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Gbaguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+
+\subsubsection*{Part (a)}
+Let's show that the mode (i.e. the maximum) of the Gaussian distribution given by (1.46) is \( \mu \).
+
+Let's restate the equation (1.46) for clarity:
+
+\begin{equation}
+  \mathcal{N}(x|\mu,\sigma^2) = \frac{1}{\left(2\pi\sigma^2\right)^{1/2}} \exp\left\{-\frac{1}{2\sigma^2}(x-\mu)^2\right\} \tag{1.46}
+\end{equation}
+
+To find the mode of the Gaussian distribution, we need to find the value of \( x \) that maximizes 
+\( \mathcal{N}(x|\mu,\sigma^2) \). Since the exponential function is monotonically increasing, we 
+can focus on maximizing the exponent:
+\begin{equation}
+  -\frac{1}{2\sigma^2}(x-\mu)^2
+\end{equation}
+
+To maximize this expression, we need to minimize \( (x-\mu)^2 \) because \(-\frac{1}{2\sigma^2} < 0\). 
+The minimum value of \( (x-\mu)^2 \) is 0 because \((x-\mu)^2 \geq 0\) for all \( x \), 
+which occurs when \( x = \mu \). Therefore, the mode of the Gaussian distribution is \( \mu \) 
+and it is unique because \(\sigma^2 > 0\).
+
+\vspace{1em}
+
+\subsubsection*{Part (b)}
+Similarly, we can show that the mode of the multivariate Gaussian distribution given by (1.52) is \( \boldsymbol{\mu} \).
+Let's restate the equation (1.52) for clarity:
+
+\begin{equation}
+  \mathcal{N}(\mathbf{x}|\boldsymbol{\mu},\Sigma) = \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2}} \exp\left\{-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x}-\boldsymbol{\mu})\right\} \tag{1.52}
+\end{equation}
+
+where \( \mathbf{x} \) is a \( D \)-dimensional vector, \( \boldsymbol{\mu} \) is the mean vector, and \( \Sigma \) is the covariance \( D \times D \) matrix and \( |\Sigma| \) is the determinant of \( \Sigma \).
+
+\vspace{0.5em}
+To find the mode of the multivariate Gaussian distribution, we need to find the value of \( \mathbf{x} \) 
+that maximizes \( \mathcal{N}(\mathbf{x}|\boldsymbol{\mu},\Sigma) \). 
+Similar to the univariate case, we can focus on maximizing the exponent:
+\begin{equation}
+  -\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x}-\boldsymbol{\mu})
+\end{equation}
+
+To maximize this expression, we need to minimize 
+\( (\mathbf{x}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x}-\boldsymbol{\mu}) \).
+Since \( \Sigma \) is a positive definite matrix, \( \Sigma^{-1} \) is also positive definite, which means 
+that \( (\mathbf{x}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x}-\boldsymbol{\mu}) \geq 0 \) for all 
+\( \mathbf{x} \). The minimum value of this expression is 0, which occurs when \( \mathbf{x} = \boldsymbol{\mu} \). 
+Therefore, the mode of the multivariate Gaussian distribution is \( \boldsymbol{\mu} \) and it is unique 
+because \( \Sigma \) is positive definite.
+\vspace{1em}
+\paragraph{Justification.}
+Since \(\Sigma\) is symmetric positive definite there exists an invertible symmetric square root \(\Sigma^{1/2}\) with
+\(\Sigma=\Sigma^{1/2}\Sigma^{1/2}\) and \(\Sigma^{-1}=\Sigma^{-1/2}\Sigma^{-1/2}\). Hence
+\[
+(\mathbf{x}-\boldsymbol{\mu})^T\Sigma^{-1}(\mathbf{x}-\boldsymbol{\mu})
+= \|\Sigma^{-1/2}(\mathbf{x}-\boldsymbol{\mu})\|^2 \ge 0.
+\]
+Equality holds iff \(\Sigma^{-1/2}(\mathbf{x}-\boldsymbol{\mu})=\mathbf{0}\), and since \(\Sigma^{-1/2}\) is invertible this is equivalent to
+\(\mathbf{x}=\boldsymbol{\mu}\).
+
+\paragraph{Resources to learn more}
+\begin{itemize}
+  \item \href{https://en.wikipedia.org/wiki/Positive-definite_matrix#Square_root_of_a_positive-definite_matrix}{Square root of a positive definite matrix}
+  \item \href{https://en.wikipedia.org/wiki/Positive-definite_matrix#Cholesky_decomposition}{Cholesky decomposition}
+\end{itemize}
+
+\end{tcolorbox}
+
+\end{document}
