@@ -1,0 +1,124 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.11}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Gbaguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+By setting the derivative of the log likelihood function (1.54) with respect to 
+\(\mu\) and \(\sigma^2\) equal to zero.
+
+Let restate the equation (1.54) for clarity:
+
+\begin{equation}
+  \ln p(\mathbf{x}|\mu,\sigma^2) = - \frac{1}{2\sigma^2}\sum_{n=1}^N (x_n - \mu)^2 -\frac{N}{2}\ln(\sigma^2) - \frac{N}{2}\ln(2\pi) \tag{1.54}
+\end{equation}
+
+In this exercise, we want to verify the results (1.55) and (1.56).
+
+\paragraph{Verification of (1.55).}
+
+\begin{equation}
+  \mu_{\text{ML}} = \frac{1}{N} \sum_{n=1}^N x_n \tag{1.55}
+\end{equation}
+
+Let start by computing the derivative of the log likelihood function with respect to \(\mu\):
+
+\begin{equation}
+  \frac{\partial}{\partial \mu} \ln p(\mathbf{x}|\mu,\sigma^2) = -\frac{1}{2\sigma^2} \sum_{n=1}^N \frac{\partial}{\partial \mu} (x_n - \mu)^2
+\end{equation}
+
+because the other terms do not depend on \(\mu\). Now, we can compute the derivative inside the sum:
+
+\begin{equation}
+  \frac{\partial}{\partial \mu} (x_n - \mu)^2 = -2(x_n - \mu)
+\end{equation}
+
+Substituting this back into the expression for the derivative of the log likelihood, we get:
+
+\begin{equation}
+  \frac{\partial}{\partial \mu} \ln p(\mathbf{x}|\mu,\sigma^2) = -\frac{1}{2\sigma^2} \sum_{n=1}^N (-2)(x_n - \mu) = \frac{1}{\sigma^2} \sum_{n=1}^N (x_n - \mu)
+\end{equation}
+
+We can now set this derivative equal to zero to find the maximum likelihood estimate for \(\mu\):
+
+\begin{align*}
+  \frac{\partial}{\partial \mu} \ln p(\mathbf{x}|\mu,\sigma^2) &= 0 \\
+  \frac{1}{\sigma^2} \sum_{n=1}^N (x_n - \mu) &= 0 \\
+  \sum_{n=1}^N (x_n - \mu) &= 0 \quad \text{(since } \sigma^2 > 0) \\
+  \sum_{n=1}^N x_n - N\mu &= 0 \\
+  N\mu &= \sum_{n=1}^N x_n \\
+  \mu &= \frac{1}{N} \sum_{n=1}^N x_n
+\end{align*}
+
+This matches the result given in (1.55).
+
+\paragraph{Verification of (1.56).}
+\begin{equation}
+  \sigma^2_{\text{ML}} = \frac{1}{N} \sum_{n=1}^N (x_n - \mu_{\text{ML}})^2 \tag{1.56}
+\end{equation}
+
+Now, let's compute the derivative of the log likelihood function with respect to \(\sigma^2\):
+
+\begin{equation}
+  \frac{\partial}{\partial \sigma^2} \ln p(\mathbf{x}|\mu,\sigma^2) = -\frac{1}{2} \sum_{n=1}^N (x_n - \mu)^2 \cdot \frac{\partial}{\partial \sigma^2} \left( \frac{1}{\sigma^2} \right) - \frac{N}{2} \cdot \frac{\partial}{\partial \sigma^2} \ln(\sigma^2)
+\end{equation}
+
+We can compute the derivatives inside the expression:
+
+\begin{align*}
+  \frac{\partial}{\partial \sigma^2} \left( \frac{1}{\sigma^2} \right) &= -\frac{1}{\sigma^4} \\
+  \frac{\partial}{\partial \sigma^2} \ln(\sigma^2) &= \frac{1}{\sigma^2}
+\end{align*}
+
+Substituting these back into the expression for the derivative of the log likelihood, we get:
+
+\begin{equation}
+  \frac{\partial}{\partial \sigma^2} \ln p(\mathbf{x}|\mu,\sigma^2) = -\frac{1}{2} \sum_{n=1}^N (x_n - \mu)^2 \cdot \left( -\frac{1}{\sigma^4} \right) - \frac{N}{2} \cdot \frac{1}{\sigma^2}
+\end{equation}
+
+Simplifying this expression:
+
+\begin{equation}
+  \frac{\partial}{\partial \sigma^2} \ln p(\mathbf{x}|\mu,\sigma^2) = \frac{1}{2\sigma^4} \sum_{n=1}^N (x_n - \mu)^2 - \frac{N}{2\sigma^2}
+\end{equation}
+
+We can now set this derivative equal to zero to find the maximum likelihood estimate for \(\sigma^2\):
+
+\begin{align*}
+  \frac{\partial}{\partial \sigma^2} \ln p(\mathbf{x}|\mu,\sigma^2) &= 0 \\
+  \frac{1}{2\sigma^4} \sum_{n=1}^N (x_n - \mu)^2 - \frac{N}{2\sigma^2} &= 0 \\
+  \sum_{n=1}^N (x_n - \mu)^2 &= N\sigma^2 \\
+  \sigma^2 &= \frac{1}{N} \sum_{n=1}^N (x_n - \mu)^2
+\end{align*}
+
+This matches the result given in (1.56).
+
+\vspace{1em}
+
+\textbf{ We can now conclude that the maximum likelihood estimates for \(\mu\) and \(\sigma^2\) are 
+given by (1.55) and (1.56) respectively, and both estimates are unique because the log likelihood function is concave with respect to \(\mu\) and \(\sigma^2\).}
+\end{tcolorbox}
+
+\end{document}
