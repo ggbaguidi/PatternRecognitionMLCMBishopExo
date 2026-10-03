@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.13}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Gbaguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+The maximum-likelihood variance estimator in (1.56) is
+\[
+\sigma^2_{ML} = \frac{1}{N} \sum_{n=1}^{N} (x_n - \mu_{ML})^2.
+\]
+
+In this exercise, replace the estimate $\mu_{ML}$ by the true mean $\mu$. Define
+\[
+\widetilde{\sigma}^2 = \frac{1}{N} \sum_{n=1}^{N} (x_n - \mu)^2.
+\]
+We calculate its expectation:
+
+\begin{align*}
+\mathbb{E}[\widetilde{\sigma}^2]
+&= \mathbb{E}\left[\frac{1}{N} \sum_{n=1}^{N} (x_n - \mu)^2\right]
+  \quad \text{(definition of $\widetilde{\sigma}^2$)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \mathbb{E}\left[(x_n - \mu)^2\right]
+  \quad \text{(linearity of expectation)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \operatorname{Var}(x_n)
+  \quad \text{(definition of variance around the true mean)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \sigma^2
+  \quad \text{(each $x_n$ has variance $\sigma^2$)} \\
+&= \sigma^2
+  \quad \text{(there are $N$ identical terms).}
+\end{align*}
+
+Therefore,
+\[
+\boxed{\mathbb{E}[\widetilde{\sigma}^2] = \sigma^2}.
+\]
+Thus, replacing $\mu_{ML}$ by the true mean $\mu$ removes the downward bias of the maximum-likelihood variance estimator.
+\end{tcolorbox}
+
+\end{document}
