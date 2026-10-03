@@ -1,0 +1,98 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.14}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Gbaguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+For any real square matrix $\mathbf{W}$, define
+\[
+\mathbf{W}^{S}=\frac{\mathbf{W}+\mathbf{W}^{\mathsf{T}}}{2},
+\qquad
+\mathbf{W}^{A}=\frac{\mathbf{W}-\mathbf{W}^{\mathsf{T}}}{2}.
+\]
+In terms of their elements,
+\[
+w_{ij}^{S}=\frac{w_{ij}+w_{ji}}{2},
+\qquad
+w_{ij}^{A}=\frac{w_{ij}-w_{ji}}{2}.
+\]
+These definitions give
+\begin{align*}
+w_{ji}^{S}
+&=\frac{w_{ji}+w_{ij}}{2}=w_{ij}^{S}, \\
+w_{ji}^{A}
+&=\frac{w_{ji}-w_{ij}}{2}=-w_{ij}^{A}, \\
+w_{ij}^{S}+w_{ij}^{A}
+&=\frac{w_{ij}+w_{ji}}{2}+\frac{w_{ij}-w_{ji}}{2}=w_{ij}.
+\end{align*}
+Thus, $\mathbf{W}^{S}$ is symmetric, $\mathbf{W}^{A}$ is antisymmetric,
+and $\mathbf{W}=\mathbf{W}^{S}+\mathbf{W}^{A}$. In particular,
+$w_{ii}^{A}=0$ for every diagonal element.
+
+Consider the contribution of the antisymmetric part to the quadratic form:
+\begin{align*}
+\sum_{i=1}^{D}\sum_{j=1}^{D} w_{ij}^{A}x_i x_j
+&= \sum_{i=1}^{D}\sum_{j=1}^{D} w_{ji}^{A}x_j x_i
+  \quad \text{(rename the dummy indices $i$ and $j$)} \\
+&= -\sum_{i=1}^{D}\sum_{j=1}^{D} w_{ij}^{A}x_i x_j
+  \quad \text{(antisymmetry and $x_i x_j=x_j x_i$)}.
+\end{align*}
+
+Let the original double sum be $A$. The equation above gives $A=-A$, so
+$2A=0$ and therefore
+\[
+\sum_{i=1}^{D}\sum_{j=1}^{D} w_{ij}^{A}x_i x_j=0.
+\]
+Thus, only the symmetric part contributes:
+\begin{align*}
+\sum_{i=1}^{D}\sum_{j=1}^{D} w_{ij}x_i x_j
+&= \sum_{i=1}^{D}\sum_{j=1}^{D}
+    \left(w_{ij}^{S}+w_{ij}^{A}\right)x_i x_j
+  \quad \text{(matrix decomposition)} \\
+&= \sum_{i=1}^{D}\sum_{j=1}^{D} w_{ij}^{S}x_i x_j
+  \quad \text{(the antisymmetric contribution is zero)}.
+\end{align*}
+
+It remains to count the independent parameters in the symmetric matrix
+$\mathbf{W}^{S}$. There are $D$ independent diagonal elements. For the
+off-diagonal elements, symmetry gives $w_{ij}^{S}=w_{ji}^{S}$, so only one
+element from each pair is independent. There are
+$D(D-1)/2$ such pairs. Hence, the total number of independent parameters is
+\[
+D+\frac{D(D-1)}{2}
+=\frac{D(D+1)}{2}.
+\]
+Therefore, the quadratic form can be represented using only
+$D(D+1)/2$ independent coefficients. Explicitly,
+\[
+\sum_{i=1}^{D}\sum_{j=1}^{D} w_{ij}x_i x_j
+=\sum_{i=1}^{D} w_{ii}^{S}x_i^2
++2\sum_{1\leq i<j\leq D} w_{ij}^{S}x_i x_j.
+\]
+The factor of $2$ accounts for the two equal off-diagonal contributions,
+so the coefficients can be chosen symmetric without loss of generality.
+\end{tcolorbox}
+
+\end{document}
