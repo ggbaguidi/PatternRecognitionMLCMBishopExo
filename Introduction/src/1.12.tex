@@ -31,9 +31,9 @@ In this exercise, we are asked to show that
 \[
 \mathbb{E}[x_n x_m] = \mu^2 + I_{nm} \sigma^2
 \]
-where $x_n$ and $x_m$ denote data points sampled from a Gaussian distribution with mean $\mu$ and variance $\sigma^2$, and $I_{nm}$ satisfies $I_{nm} = 1$ if $n = m$ and $I_{nm} = 0$ otherwise.
+where $x_1,\ldots,x_N$ are independent samples from a Gaussian distribution with mean $\mu$ and variance $\sigma^2$, and $I_{nm}$ satisfies $I_{nm} = 1$ if $n = m$ and $I_{nm} = 0$ otherwise.
 
-To prove this, we start by considering the definition of the expectation of the product of two random variables:
+For $n\neq m$, the expectation of the product is
 
 \[
 \mathbb{E}[x_n x_m] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x_n x_m p(x_n, x_m) \, dx_n \, dx_m
@@ -75,14 +75,16 @@ We can conclude that:
 
 where $I_{nm} = 1$ if $n = m$ and $I_{nm} = 0$ otherwise, which completes the proof.
 
-\paragraph{To continue, we hawe to prove results (1.57) and (1.58) in the book.}
-
-First, let's recall that the maximum likelihood solutions $\mu_{ML}$ and 
-$\sigma^2_{ML}$ are functions of the data points $x_1, x_2, \ldots, x_N$. By considering the expectations
-of these solutions with respect to the data set values, which are drawn from a gaussian distribution
-with mean $\mu$ and variance $\sigma^2$.
-
-we can prove (1.57) and (1.58) as follows:
+\paragraph{Expected maximum-likelihood mean: result (1.57).}
+The estimators are
+\[
+\mu_{ML}=\frac{1}{N}\sum_{n=1}^{N}x_n,
+\qquad
+\sigma^2_{ML}=\frac{1}{N}\sum_{n=1}^{N}(x_n-\mu_{ML})^2.
+\]
+Both are random variables because they depend on the sample. The true
+parameters $\mu$ and $\sigma^2$ are fixed, and expectations are taken over
+the possible samples. For the mean,
 \begin{align*}
 \mathbb{E}[\mu_{ML}] &= \mathbb{E}\left[\frac{1}{N} \sum_{n=1}^{N} x_n\right] \quad \text{(definition of $\mu_{ML}$)} \\
 &= \frac{1}{N} \sum_{n=1}^{N} \mathbb{E}[x_n] \quad \text{(linearity of expectation)} \\
@@ -90,18 +92,84 @@ we can prove (1.57) and (1.58) as follows:
 &= \mu \quad \text{(there are $N$ identical terms)}
 \end{align*}
 
+\paragraph{Expected maximum-likelihood variance: result (1.58).}
+Expanding the squared residual gives
 \begin{align*}
-\mathbb{E}[\sigma^2_{ML}] &= \mathbb{E}{\left[\frac{1}{N} \sum_{n=1}^{N} (x_n - \mu_{ML})^2\right]} \quad \text{(definition of $\sigma^2_{ML}$)} \\
-&= \frac{1}{N} \sum_{n=1}^{N} \mathbb{E}[(x_n - \mu_{ML})^2] \quad \text{(linearity of expectation)} \\
-&= \frac{1}{N} \sum_{n=1}^{N} \left(\mathbb{E}[x_n^2] - 2\mathbb{E}[x_n\mu_{ML}] + \mathbb{E}[\mu_{ML}^2]\right) \quad \text{(expand the square)} \\
-&= \frac{1}{N} \sum_{n=1}^{N} \left(\sigma^2 + \mu^2 - 2\left(\mu^2 + \frac{\sigma^2}{N}\right) + \left(\mu^2 + \frac{\sigma^2}{N}\right)\right) \\
-&\hspace{2em}\text{(use $\mathbb{E}[x_n^2]=\sigma^2+\mu^2$, $\mathbb{E}[x_n\mu_{ML}]=\mu^2+\sigma^2/N$, and} \\
-&\hspace{2em}\text{$\mathbb{E}[\mu_{ML}^2]=\mu^2+\sigma^2/N$)} \\
-&= \frac{1}{N} \sum_{n=1}^{N} \sigma^2\left(1 - \frac{1}{N}\right) \quad \text{(simplify each summand)} \\
-&= \frac{N-1}{N}\sigma^2 \quad \text{(sum $N$ identical terms)}
+\mathbb{E}[\sigma^2_{ML}]
+&=\frac{1}{N}\sum_{n=1}^{N}\mathbb{E}[(x_n-\mu_{ML})^2] \\
+&=\frac{1}{N}\sum_{n=1}^{N}
+\left(\mathbb{E}[x_n^2]-2\mathbb{E}[x_n\mu_{ML}]
++\mathbb{E}[\mu_{ML}^2]\right).
 \end{align*}
+We already know that $\mathbb{E}[x_n^2]=\mu^2+\sigma^2$.
+We now calculate the other two expectations explicitly.
 
-Q.E.D.
+\paragraph{1. Calculate $\mathbb{E}[x_n\mu_{ML}]$.}
+Fix $n$. Since $\mu_{ML}$ includes $x_n$, they are not independent.
+Substituting the sample mean and separating the term $m=n$ gives
+\begin{align*}
+\mathbb{E}[x_n\mu_{ML}]
+&=\mathbb{E}\left[x_n\frac{1}{N}\sum_{m=1}^{N}x_m\right] \\
+&=\frac{1}{N}\sum_{m=1}^{N}\mathbb{E}[x_nx_m] \\
+&=\frac{1}{N}\left(\mathbb{E}[x_n^2]
++\sum_{\substack{m=1\\m\neq n}}^{N}\mathbb{E}[x_nx_m]\right) \\
+&=\frac{1}{N}\left((\mu^2+\sigma^2)+(N-1)\mu^2\right) \\
+&=\frac{1}{N}\left(N\mu^2+\sigma^2\right) \\
+&=\mu^2+\frac{\sigma^2}{N}.
+\end{align*}
+There is one diagonal term and $N-1$ terms involving distinct samples.
+In particular, replacing $\mathbb{E}[x_n\mu_{ML}]$ by
+$\mathbb{E}[x_n]\mathbb{E}[\mu_{ML}]=\mu^2$ would be incorrect.
+
+\paragraph{2. Calculate $\mathbb{E}[\mu_{ML}^2]$.}
+The square of a sum contains all ordered pairs of indices:
+\begin{align*}
+\mu_{ML}^2
+&=\left(\frac{1}{N}\sum_{n=1}^{N}x_n\right)
+  \left(\frac{1}{N}\sum_{m=1}^{N}x_m\right) \\
+&=\frac{1}{N^2}\sum_{n=1}^{N}\sum_{m=1}^{N}x_nx_m.
+\end{align*}
+Of the $N^2$ ordered pairs, $N$ have $n=m$ and $N(N-1)$ have $n\neq m$.
+Therefore,
+\begin{align*}
+\mathbb{E}[\mu_{ML}^2]
+&=\frac{1}{N^2}\sum_{n=1}^{N}\sum_{m=1}^{N}\mathbb{E}[x_nx_m] \\
+&=\frac{1}{N^2}\left(
+  \sum_{n=1}^{N}\mathbb{E}[x_n^2]
+  +\sum_{n=1}^{N}\sum_{\substack{m=1\\m\neq n}}^{N}\mathbb{E}[x_nx_m]
+  \right) \\
+&=\frac{1}{N^2}\left(N(\mu^2+\sigma^2)+N(N-1)\mu^2\right) \\
+&=\frac{1}{N^2}\left(N\mu^2+N\sigma^2+(N^2-N)\mu^2\right) \\
+&=\frac{1}{N^2}\left(N^2\mu^2+N\sigma^2\right) \\
+&=\mu^2+\frac{\sigma^2}{N}.
+\end{align*}
+Notice that $\mathbb{E}[\mu_{ML}^2]\neq(\mathbb{E}[\mu_{ML}])^2$;
+their difference is $\operatorname{Var}(\mu_{ML})=\sigma^2/N$.
+
+\paragraph{3. Substitute and simplify.}
+For each $n$, the expected squared residual is
+\begin{align*}
+\mathbb{E}[(x_n-\mu_{ML})^2]
+&=\mathbb{E}[x_n^2]-2\mathbb{E}[x_n\mu_{ML}]
+  +\mathbb{E}[\mu_{ML}^2] \\
+&=(\mu^2+\sigma^2)
+  -2\left(\mu^2+\frac{\sigma^2}{N}\right)
+  +\left(\mu^2+\frac{\sigma^2}{N}\right) \\
+&=\mu^2+\sigma^2-2\mu^2-\frac{2\sigma^2}{N}
+  +\mu^2+\frac{\sigma^2}{N} \\
+&=(\mu^2-2\mu^2+\mu^2)
+  +\sigma^2-\frac{2\sigma^2}{N}+\frac{\sigma^2}{N} \\
+&=\sigma^2-\frac{\sigma^2}{N} \\
+&=\frac{N-1}{N}\sigma^2.
+\end{align*}
+Finally, averaging these $N$ identical expectations gives
+\begin{align*}
+\mathbb{E}[\sigma^2_{ML}]
+&=\frac{1}{N}\sum_{n=1}^{N}\mathbb{E}[(x_n-\mu_{ML})^2] \\
+&=\frac{1}{N}\sum_{n=1}^{N}\frac{N-1}{N}\sigma^2 \\
+&=\frac{1}{N}\cdot N\cdot\frac{N-1}{N}\sigma^2 \\
+&=\boxed{\frac{N-1}{N}\sigma^2}.
+\end{align*}
 \end{tcolorbox}
 
 \end{document}
