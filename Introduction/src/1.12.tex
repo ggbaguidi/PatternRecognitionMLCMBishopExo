@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\BookName}{Pattern Recognition and Machine Learning}
+\newcommand{\BookAuthor}{Christopher M. Bishop}
+\newcommand{\ChapterName}{Introduction}
+\newcommand{\ExerciseID}{1.12}
+
+\title{Chapter: \ChapterName}
+\author{Ahonakpon Guy Gbaguidi}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \large\textbf{Exercise \ExerciseID}
+
+  \vspace{0.5em}
+
+  \normalsize\BookName\ - \BookAuthor
+\end{center}
+
+\begin{tcolorbox}[breakable,colback=gray!5,colframe=gray!60,title=Solution]
+In this exercise, we are asked to show that
+
+\[
+\mathbb{E}[x_n x_m] = \mu^2 + I_{nm} \sigma^2
+\]
+where $x_n$ and $x_m$ denote data points sampled from a Gaussian distribution with mean $\mu$ and variance $\sigma^2$, and $I_{nm}$ satisfies $I_{nm} = 1$ if $n = m$ and $I_{nm} = 0$ otherwise.
+
+To prove this, we start by considering the definition of the expectation of the product of two random variables:
+
+\[
+\mathbb{E}[x_n x_m] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x_n x_m p(x_n, x_m) \, dx_n \, dx_m
+\]
+
+We know that if $n \neq m$, then $x_n$ and $x_m$ are independent, and thus the joint probability density function can be expressed as the product of their individual densities:
+
+\[
+p(x_n, x_m) = p(x_n) p(x_m)
+\]
+
+Then, we can write:
+
+\begin{align*}
+\mathbb{E}[x_n x_m] 
+&= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x_n x_m p(x_n) p(x_m) \, dx_n \, dx_m \\
+&= \int_{-\infty}^{\infty} x_n \left( \int_{-\infty}^{\infty} x_m p(x_m) \, dx_m \right) p(x_n) \, dx_n \\
+&= \int_{-\infty}^{\infty} x_n \mathbb{E}[x_m] p(x_n) \, dx_n \\
+&= \mathbb{E}[x_m] \int_{-\infty}^{\infty} x_n p(x_n) \, dx_n \\
+&= \mathbb{E}[x_m] \mathbb{E}[x_n] \\
+&= \mathbb{E}[x_n] \mathbb{E}[x_m] \\
+&= \mu^2
+\end{align*}
+
+Now, if $n = m$, then we have:
+
+\begin{align*}
+\mathbb{E}[x_n x_n]
+&= \mathbb{E}[x_n^2] \\
+&= \text{Var}(x_n) + (\mathbb{E}[x_n])^2 \\
+&= \sigma^2 + \mu^2
+\end{align*}
+
+
+We can conclude that:
+\[
+\mathbb{E}[x_n x_m] = \mu^2 + I_{nm} \sigma^2
+\]
+
+where $I_{nm} = 1$ if $n = m$ and $I_{nm} = 0$ otherwise, which completes the proof.
+
+\paragraph{To continue, we hawe to prove results (1.57) and (1.58) in the book.}
+
+First, let's recall that the maximum likelihood solutions $\mu_{ML}$ and 
+$\sigma^2_{ML}$ are functions of the data points $x_1, x_2, \ldots, x_N$. By considering the expectations
+of these solutions with respect to the data set values, which are drawn from a gaussian distribution
+with mean $\mu$ and variance $\sigma^2$.
+
+we can prove (1.57) and (1.58) as follows:
+\begin{align*}
+\mathbb{E}[\mu_{ML}] &= \mathbb{E}\left[\frac{1}{N} \sum_{n=1}^{N} x_n\right] \quad \text{(definition of $\mu_{ML}$)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \mathbb{E}[x_n] \quad \text{(linearity of expectation)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \mu \quad \text{(each $x_n$ has mean $\mu$)} \\
+&= \mu \quad \text{(there are $N$ identical terms)}
+\end{align*}
+
+\begin{align*}
+\mathbb{E}[\sigma^2_{ML}] &= \mathbb{E}{\left[\frac{1}{N} \sum_{n=1}^{N} (x_n - \mu_{ML})^2\right]} \quad \text{(definition of $\sigma^2_{ML}$)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \mathbb{E}[(x_n - \mu_{ML})^2] \quad \text{(linearity of expectation)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \left(\mathbb{E}[x_n^2] - 2\mathbb{E}[x_n\mu_{ML}] + \mathbb{E}[\mu_{ML}^2]\right) \quad \text{(expand the square)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \left(\sigma^2 + \mu^2 - 2\left(\mu^2 + \frac{\sigma^2}{N}\right) + \left(\mu^2 + \frac{\sigma^2}{N}\right)\right) \\
+&\hspace{2em}\text{(use $\mathbb{E}[x_n^2]=\sigma^2+\mu^2$, $\mathbb{E}[x_n\mu_{ML}]=\mu^2+\sigma^2/N$, and} \\
+&\hspace{2em}\text{$\mathbb{E}[\mu_{ML}^2]=\mu^2+\sigma^2/N$)} \\
+&= \frac{1}{N} \sum_{n=1}^{N} \sigma^2\left(1 - \frac{1}{N}\right) \quad \text{(simplify each summand)} \\
+&= \frac{N-1}{N}\sigma^2 \quad \text{(sum $N$ identical terms)}
+\end{align*}
+
+Q.E.D.
+\end{tcolorbox}
+
+\end{document}
