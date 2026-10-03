@@ -75,14 +75,16 @@ We can conclude that:
 
 where $I_{nm} = 1$ if $n = m$ and $I_{nm} = 0$ otherwise, which completes the proof.
 
-\paragraph{To continue, we hawe to prove results (1.57) and (1.58) in the book.}
-
-First, let's recall that the maximum likelihood solutions $\mu_{ML}$ and 
-$\sigma^2_{ML}$ are functions of the data points $x_1, x_2, \ldots, x_N$. By considering the expectations
-of these solutions with respect to the data set values, which are drawn from a gaussian distribution
-with mean $\mu$ and variance $\sigma^2$.
-
-we can prove (1.57) and (1.58) as follows:
+\paragraph{Expected maximum-likelihood mean: result (1.57).}
+The estimators are
+\[
+\mu_{ML}=\frac{1}{N}\sum_{n=1}^{N}x_n,
+\qquad
+\sigma^2_{ML}=\frac{1}{N}\sum_{n=1}^{N}(x_n-\mu_{ML})^2.
+\]
+Both are random variables because they depend on the sample. The true
+parameters $\mu$ and $\sigma^2$ are fixed, and expectations are taken over
+the possible samples. For the mean,
 \begin{align*}
 \mathbb{E}[\mu_{ML}] &= \mathbb{E}\left[\frac{1}{N} \sum_{n=1}^{N} x_n\right] \quad \text{(definition of $\mu_{ML}$)} \\
 &= \frac{1}{N} \sum_{n=1}^{N} \mathbb{E}[x_n] \quad \text{(linearity of expectation)} \\
